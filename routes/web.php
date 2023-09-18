@@ -23,4 +23,5 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('acesso');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/registro', [AuthController::class, 'register'])->name('register');
 Route::get('/books/listar', [LivrosController::class, 'index'])->name('listarLivros');
+Route::get('/clima', [LivrosController::class, 'clima'])->name('clima');
 

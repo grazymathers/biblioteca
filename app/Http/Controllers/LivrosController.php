@@ -76,4 +76,34 @@ class LivrosController extends Controller
         // Redireciona para a página de listagem de livros
         return redirect()->route('listarLivros');
     }
+
+    public function clima(){
+        $chave = "3c568311";
+        $ip = $_SERVER["REMOTE_ADDR"];
+
+        // URL da API HG Weather com base no IP
+        $url = "https://api.hgbrasil.com/weather?key=$chave&user_ip=$ip";
+
+        // Faz a solicitação à API
+        $resposta = file_get_contents($url);
+
+        if ($resposta === false) {
+            return "Não foi possível obter os dados da cidade e temperatura.";
+        }
+
+        // Decodifica a resposta JSON
+        $dados = json_decode($resposta, true);
+
+        if (!isset($dados['results'])) {
+            return "Dados não encontrados para o IP atual.";
+        }
+
+        $temperatura = [
+            "cidade" => $dados['results']['city'],
+            "temperatura" => $dados['results']['temp']."°"
+        ];
+
+        return $temperatura;
+
+    }
 }
